@@ -23,17 +23,15 @@ This application is a simplest web clone of the instagram application. A user ca
 
     1. Clone or download the Repository
     2. Create a virtual environment
-    3. Read the requirements file and Install all the requirements. Or run: 
-	pip3 install -r requirements.txt 
-       to automatically install all the requirements
+    3. Read the requirements file and Install all the requirements. Or run pip3 install -r requirements.txt to automatically install all the requirements
     4. Prepare environment variables
-	-export DATABASE_URL='postgresql+psycopg2://username:password@localhost/blog'
-	-export SECRET_KEY='Your secret key',etc
+    -export DATABASE_URL='postgresql+psycopg2://username:password@localhost/blog'
+    -export SECRET_KEY='Your secret key',etc
     5. Run initial migration
-    	python3.6 manage.py makemigrations gram
-    	python3.6 manage.py migrate
+    python3.6 manage.py makemigrations gram
+    python3.6 manage.py migrate
     6. Run the application
-    	python3.6 manage.py runserver    	
+    python3.6 manage.py runserver    	
     7. Access the application through `localhost:8000`
 	
 ### Development
