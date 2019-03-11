@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="container1">
+         <div class="item">
+             <p style="color:black;">{{user.username}}</p>
+             <img src="{{user.image.cdn_url}}" alt="Image">
+
+        </div>
+        <div class="item1">
+            <div class="posts"><p>{{posts.count}} posts</p></div>
+            <div class="followers"><p>{{followers}} followers</p></div>
+            <div class="followings"><p> {{following}} followings</p></div>
+        </div>
+    </div>
+
+{% endblock  %}
