@@ -25,16 +25,16 @@ def signup(request):
 def home(request):
     user=request.user
     images=Image.objects.all()
-    if request.method=='POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment=form.save(commit=False)
-            image_id= request.POST['cmnt-field']
-            image= Image.objects.get(id=image_id)
-            comment.image=image
-            comment.user=user
-            comment.save()
-        return redirect('home')
+    # if request.method=='POST':
+    #     form = CommentForm(request.POST)
+    #     if form.is_valid():
+    #         comment=form.save(commit=False)
+    #         image_id= request.POST['cmnt-field']
+    #         image= Image.objects.get(id=image_id)
+    #         comment.image=image
+    #         comment.user=user
+    #         comment.save()
+    #     return redirect('home')
     else:
         form=CommentForm()
     return render(request, 'main/home.html',{'images':images, 'user':user, 'form':form})
