@@ -3,11 +3,11 @@
 
 {% block content %}
 <div class="container">
-    <div class="row sign-up">
+    <div class="row sign-in">
         <div class="col-md-4">
             <img src="/static/images/phone.png" alt="Phone Image">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 form">
             {% if form.errors %}
             <p class="small">Password or Username is incorrect</p>
             {% endif %}
@@ -25,8 +25,15 @@
                 </div>
             </div>
             <div class="section">
-                <p>Don't have an account? <a href="/">Sign-Up</a></p>
+                <p>Don't have an account? <a href="{% url 'signup' %}">Sign-Up</a></p>
             </div>
+            
+            <div class="images">
+                <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.25 PM.jpeg" alt="">
+                <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.29 PM.jpeg" alt="">
+                <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.25 PM.jpeg" alt="">
+            </div>
+
         </div>
     </div>
 </div>

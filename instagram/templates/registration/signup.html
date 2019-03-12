@@ -5,15 +5,12 @@
 {% block content %}
 <div class="container">
   <div class="row signup-page">
-    {% comment %} <div class="col-md-6">
-      <img src="/static/images/phone.png" alt="Phone Image">
-    </div> {% endcomment %}
     <div class="col-md-6">
       {% if form.errors %}
         <p>Some information may be incorrect</p>
       {% endif %}
       <div class="signup-fields">
-          <div class="section">
+          <div class="section top">
               <h1>Instagram</h1>
               <p>Sign up to see photos and videos from your friends</p>
               <div class="form-section">
@@ -27,12 +24,21 @@
                   </form>
               </div>
           </div>
-          <div class="section">
+          <div class="section  login">
               <p>Have an account? <a href="/accounts/login/">Log In</a></p>
           </div>
+          <p class="get-app">Get the app</p>
+          <div class="images">
+            <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.25 PM.jpeg" alt="">
+            <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.29 PM.jpeg" alt="">
+            <img src="static/images/WhatsApp Image 2019-03-11 at 11.53.25 PM.jpeg" alt="">
+          </div>
       </div>
+      
     </div>
   </div>
+  <!-- <p>Get the app</p> -->
+ 
 </div>
  
 {% endblock %}
