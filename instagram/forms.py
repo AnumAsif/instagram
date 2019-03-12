@@ -31,6 +31,9 @@ class CommentForm(forms.ModelForm):
         exclude = ['likes', 'post_date', 'profile']
 
 class CommentForm(forms.ModelForm):
+    comment= forms.CharField(max_length=100,
+                           widget= forms.TextInput
+                           (attrs={'placeholder':'Add a comment...'}))
     class Meta:
         model = Comments
         exclude = ['image', 'user']        
