@@ -149,3 +149,15 @@ p span{
 .container4 .item{
     width:0 auto;
 }
+.control-label{
+    display:none;
+}
+.form-group textarea{
+    height:4vh;
+    width:100%;
+}
+#id_comment{
+    outline:none;
+    border:none;
+    /* border-top: 2px solid gray; */
+}

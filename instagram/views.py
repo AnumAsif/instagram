@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
-from .forms import SignUpForm, ImageForm
+from .forms import SignUpForm, ImageForm, CommentForm
 from django.contrib.auth.models import User
 from .models import  Image, Comments, Follow, ImageLike
 # Create your views here.
@@ -25,8 +25,19 @@ def signup(request):
 def home(request):
     user=request.user
     images=Image.objects.all()
-    
-    return render(request, 'main/home.html',{'images':images, 'user':user})
+    if request.method=='POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment=form.save(commit=False)
+            image_id= request.POST['cmnt-field']
+            image= Image.objects.get(id=image_id)
+            comment.image=image
+            comment.user=user
+            comment.save()
+        return redirect('home')
+    else:
+        form=CommentForm()
+    return render(request, 'main/home.html',{'images':images, 'user':user, 'form':form})
 
 def profile(request):
     user=request.user
@@ -62,4 +73,10 @@ def like(request,post_id):
     else:
         imagelikes.delete()    
     return redirect('home')
+
+def comment(request, post_id):
     
+    user=request.user
+    image= Image.objects.get(id=post_id)
+
+    return redirect('home')

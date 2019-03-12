@@ -12,7 +12,8 @@ urlpatterns = [
     url(r'^$',views.signup, name='signup'),
     url(r'profile/$', views.profile, name='profile'),
     url(r'post/$', views.addpost, name='add_post'),
-    url(r'^likes/(\d+)/$', views.like, name='like')
+    url(r'^likes/(\d+)/$', views.like, name='like'),
+    url(r'^comments/(\d+)/$', views.comment, name='add_comment')    
 ]
 if settings.DEBUG:
    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

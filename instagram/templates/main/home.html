@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-
+{% load bootstrap3 %}
 {% block content %}
 <div class="container4">
     <div class="item">
@@ -37,12 +37,27 @@
                     <h5>{{image.post_date|timesince}} ago</h5>
                 </div>
                 <div class="comments">
-                    
+                    {% for cmnt in image.comments.all %}
+                    <div class="comment">
+                        <div class="date">{{ cmnt.created_date }}</div>
+                        <strong>{{ cmnt.user }}</strong>
+                        <p>{{ cmnt.comment|linebreaks}}</p>
+                    </div>
+                    {% empty %}
+                        <p>No comments here yet :(</p>
+                    {% endfor %}
                 </div>
                 <div class="add-comment">
-                    <form action="POST">
-                        <input type="text" placeholder="Add a comment...">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="text" name="cmnt-field" value="{{image.id}}" hidden>
+                          
+                        </div>
+                       <button type="submit" hidden></button>
                     </form>
+                    <!-- <input type="text" name="cmnt-img" id={{image.id}} placeholder="Add a comment..."> -->
                 </div>
             </div>
         
