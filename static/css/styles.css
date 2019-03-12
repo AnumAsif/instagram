@@ -133,3 +133,19 @@ p span{
     padding-top: 20px;
     font-size:20px;
 }
+.heart-icon{
+    list-style: none;
+    padding-left:0;
+}
+.heart-icon li a{
+    color:rgb(202, 61, 61);
+    
+}
+.likes p{
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.container4 .item{
+    width:0 auto;
+}

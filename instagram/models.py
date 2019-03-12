@@ -35,7 +35,6 @@ class Image(models.Model):
     image_name=models.CharField(max_length=50)
     image_caption=HTMLField(blank=True)
     post_date=models.DateTimeField(auto_now=True)
-    likes=models.IntegerField(default=0)
     profile=models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -63,7 +62,13 @@ class Image(models.Model):
         images = Image.objects.all()
         return images
 
+class ImageLike(models.Model):
+    image= models.ForeignKey(Image, related_name='imagelikes')
+    like = models.ForeignKey(User, related_name='image_like')
           
+#     Image.objects.get(...).imagelikes.all()
+
+# User.objects.get(...).image_like.all()      
 class Comments(models.Model):
     comment = HTMLField()
     posted_on = models.DateTimeField(auto_now=True)

@@ -2,6 +2,12 @@
 
 {% block content %}
 <div class="container4">
+    <div class="item">
+        <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">Add Post</a></button>
+    </div>
+    
+</div>
+<div class="container4">
          {% for image in images %}
             <div class="card">
                 <div class="post-author">
@@ -20,6 +26,10 @@
                         <a href="{% url 'like' image.id %}"><i class="fa fa-heart fa-2x" aria-hidden="true"></i></a> 
                     </li>
                 </ul>
+                <div class="likes">
+                    <p>{{image.imagelikes.count}} likes</p>
+                </div>
+
                 <div class="img-caption">
                     {% autoescape on %}
                     <p><span>{{image.profile.username}}:</span> {{image.image_caption|safe}}</p>
@@ -40,12 +50,4 @@
             <h2>No images. Follow some people to see their images</h2>
             {% endfor %}
         </div>
-    
-    <div class="container">
-        <div class="item">
-            <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">Add Post</a></button>
-        </div>
-        
-    </div>
-
 {% endblock content %}
