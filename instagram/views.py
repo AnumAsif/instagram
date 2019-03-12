@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 from .forms import SignUpForm, ImageForm
 from django.contrib.auth.models import User
-from .models import  Image, Comments, Follow
+from .models import  Image, Comments, Follow, ImageLike
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
@@ -51,4 +51,15 @@ def addpost(request):
     return render(request, 'main/new_post.html',{"form":form})        
 
 def like(request,post_id):
-    user=request.user    
+
+    user=request.user
+    # likes=0
+    image= Image.objects.get(id=post_id)
+    imagelikes= ImageLike.objects.filter(image=image, like=user)
+    if not imagelikes:
+        imagelike=ImageLike(image=image, like=user)
+        imagelike.save()
+    else:
+        imagelikes.delete()    
+    return redirect('home')
+    
