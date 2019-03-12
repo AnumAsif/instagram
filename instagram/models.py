@@ -70,9 +70,9 @@ class ImageLike(models.Model):
 
 # User.objects.get(...).image_like.all()      
 class Comments(models.Model):
-    comment = HTMLField()
+    comment = models.TextField()
     posted_on = models.DateTimeField(auto_now=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def save_comment(self):
