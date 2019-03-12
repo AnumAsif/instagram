@@ -161,3 +161,26 @@ p span{
     border:none;
     /* border-top: 2px solid gray; */
 }
+.card4{
+    align-content: center;
+    margin-top:20vh;
+    border:2px solid rgb(212, 212, 212);
+   
+}  
+.card4 .form-heading{
+    margin: 10px;
+    font-size: 20px;
+    text-align: center;
+} 
+.card4 form{
+    align-content: center;
+    padding:40px;
+    background-color: #fafafa;
+
+}
+label{
+    display:none;
+}
+#tinymce{
+    width:100%;
+}
