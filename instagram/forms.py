@@ -5,12 +5,10 @@ from .models import Profile, Image, Comments
 # from tinymce.models import HTMLField
 
 class SignUpForm(UserCreationForm):
-    # email = forms.EmailField(max_length=254)
-    full_name = forms.CharField(max_length=30, required=False)
-    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={'use_required_attribute':False}))
+    email = forms.EmailField(max_length=254, help_text='Required')
     class Meta:
         model=User
-        fields=('email','full_name','username','password1')
+        fields=('email','username','password1','password2')
 
 class ProfileForm(forms.ModelForm):
     class Meta:

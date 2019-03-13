@@ -1,68 +1,76 @@
 {% extends 'main/base.html' %}
 {% load bootstrap3 %}
-{% block content %}
-<div class="container4">
-    <div class="item">
-        <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">Add Post</a></button>
-    </div>
-    
-</div>
-<div class="container4">
-         {% for image in images %}
-            <div class="card">
-                <div class="post-author">
-                    <div class="snap">
-                        <img src="{{image.image.cdn_url}}" alt="">
-                    </div>
-                    <p class = "home-text">
-                        <a href="{% url 'profile' %}">{{image.profile.username}}</a>
-                    </p>
-                </div>
-                <div class="post-image">
-                    <img src="{{image.image.cdn_url}}" alt="Image">
-                </div>
-                <ul class="heart-icon">
-                    <li>
-                        <a href="{% url 'like' image.id %}"><i class="fa fa-heart fa-2x" aria-hidden="true"></i></a> 
-                    </li>
-                </ul>
-                <div class="likes">
-                    <p>{{image.imagelikes.count}} likes</p>
-                </div>
 
-                <div class="img-caption">
-                    {% autoescape on %}
-                    <p><span>{{image.profile.username}}:</span> {{image.image_caption|safe}}</p>
-                    {% endautoescape %}
-                    <h5>{{image.post_date|timesince}} ago</h5>
+{% block content %}
+
+<div class="box">
+    <div class="container4">
+    {% for image in images %}
+        <div class="card">
+            <div class="post-author">
+                <div class="snap">
+                    <a href="{% url 'image' image_id=image.id %}"><img src="{{user.profile.profile_photo.cdn_url}}" alt=""></a>
                 </div>
-                <div class="comments">
-                    {% for cmnt in image.comments.all %}
-                    <div class="comment">
-                        <div class="date">{{ cmnt.created_date }}</div>
-                        <strong>{{ cmnt.user }}</strong>
-                        <p>{{ cmnt.comment|linebreaks}}</p>
-                    </div>
-                    {% empty %}
-                        <p>No comments here yet :(</p>
-                    {% endfor %}
-                </div>
-                <div class="add-comment">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <div class="form-group">
-                            <input type="text" name="cmnt-field" value="{{image.id}}" hidden>
-                          
-                        </div>
-                       <button type="submit" hidden></button>
-                    </form>
-                    <!-- <input type="text" name="cmnt-img" id={{image.id}} placeholder="Add a comment..."> -->
-                </div>
+                <p class = "home-text">
+                    <a href="{% url 'profile' username=user.username %}">{{ image.profile.username }}</a>
+                </p>
             </div>
-        
-            {% empty %}
-            <h2>No images. Follow some people to see their images</h2>
-            {% endfor %}
+            <div class="post-image">
+                <a href="{% url 'image' image_id=image.id %}"><img src="{{image.image.cdn_url}}" alt=""></a>
+            </div>
+            <ul class="heart-icon">
+                <li>
+                    <a href="{% url 'like' image.id %}"><i class="fa fa-heart fa-2x" aria-hidden="true"></i></a> 
+                </li>
+            </ul>
+            <div class="likes">
+                <p>{{image.imagelikes.count}} likes</p>
+            </div>
+
+            <div class="img-caption">
+                {% autoescape on %}
+                <p><span>{{image.profile.username}}:</span> {{image.image_caption|safe}}</p>
+                {% endautoescape %}
+                <h5>{{image.post_date|timesince}} ago</h5>
+            </div>
+            <div class="comments">
+                {% for cmnt in image.comments.all %}
+                <div class="comment">
+                    <div class="date">{{ cmnt.created_date }}</div>
+                   <p> <strong>{{ cmnt.user }}</strong> {{ cmnt.comment}}</p>      </div>
+                {% empty %}
+                    <p>No comments here yet :(</p>
+                {% endfor %}
+            </div>
+            <div class="add-comment">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="form-group">
+                        <input type="text" name="cmnt-field" value="{{image.id}}" hidden>
+                        
+                    </div>
+                    <button type="submit" hidden></button>
+                </form>
+                <!-- <input type="text" name="cmnt-img" id={{image.id}} placeholder="Add a comment..."> -->
+            </div>
         </div>
+    
+        {% empty %}
+        <h2>No images. Follow some people to see their images</h2>
+        {% endfor %}
+    </div>
+    <div class="post-btn-div">
+        {% if user.profile.profile_photo.cdn_url %}
+        <img src="{{user.profile.profile_photo.cdn_url}}" alt="">
+        {% else %}
+        <img src="static/images/defaultimg.jpeg" alt="">
+        {% endif %}
+       
+        <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">+ Add a Post</a></button>
+        <p><span>{{ user.username }}</span></p>
+        <p>{{ user.full_name }}</p>
+    </div>
+
+</div>
 {% endblock content %}

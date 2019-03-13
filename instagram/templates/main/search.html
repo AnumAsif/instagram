@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+<!-- {% load bootstrap3 %} -->
+
+{% block content %}
+<div class="container">
+    <div class="">
+       <p>{{profiles.count}} results have been found for the searched term {{message}}</p> 
+    </div>
+    <div class="item">
+        {% if profiles %}
+            {% for profile in profiles %}
+            <div class="profile-info">
+                {% if profile.profile_photo %}
+                  <img src="profile.profile_photo.cdn_url" alt="">
+                {% else %}
+                   <img src="static/images/defaultimg.jpeg" alt="">
+                {% endif %}
+                <p>{{profile.user.username}}</p>
+                <p><a class="btn btn-primary" href="{% url 'profile' username=profile.user.username %}">View Profile</a></p>
+            </div>
+        {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <h4 class="font">No results for {{message}} </h4>
+            </div>
+        {% endif %}
+        
+    </div>
+</div>
+{% endblock  %}}

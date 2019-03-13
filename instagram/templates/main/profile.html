@@ -1,16 +1,30 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-    <div class="container1">
-         <div class="item">
-             <p style="color:black;">{{user.username}}</p>
-             <img src="{{user.image.cdn_url}}" alt="Image">
-
+    <div class="container">
+        <div class="item1">
+            <div class="img-div">
+                <img src="{{user.profile.profile_photo.cdn_url}}" alt="Image">
+            </div>
         </div>
         <div class="item1">
-            <div class="posts"><p>{{posts.count}} posts</p></div>
-            <div class="followers"><p>{{followers}} followers</p></div>
-            <div class="followings"><p> {{following}} followings</p></div>
+            <div class="profile-name">
+                <p style="color:black;">{{user.username}}</p>
+                {% comment %} {% if user.is_authenticated and user.username == profile.username %}{% endif %} {% endcomment %}
+                <button class="btn btn-info btn-md">Follow</button>
+                <button class="btn btn-edit"><a href="{% url 'edit_profile' %}">Edit Profile</a></button>
+            </div>
+            
+            <div class="profile-info">
+                <p><span>{{posts.count}}</span>  posts</p>
+                <p><span>{{followers.count}}</span>  followers</p>
+                <p><span>{{followings.count}}</span>  followings</p>
+            </div>
+            <div class="profile-bio">
+                {% autoescape on %}
+                    <p>{{user.profile.bio|safe}} </p>
+                {% endautoescape %}
+            </div>
         </div>
     </div>
 

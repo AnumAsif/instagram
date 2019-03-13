@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="fluid-container"></div>
+<div class="image">
+    <img class="image_img" src="{{image.image.cdn_url}}" alt="">
+    <div class="image_info">
+
+        <div class="profile"> 
+            <div class="snap">
+                {% if image.profile.profile.profile_photo %}
+                <img src="{{image.profile.profile.profile_photo.cdn_url}}" alt="Image">
+                {% else %}
+                <img src="/static/images/defaultimg.jpeg" alt="">
+                {% endif %}
+            </div>
+
+            <a class='snap-a' href="{% url 'profile' username=image.profile.username %}">{{image.profile.username}}</a></div>
+            <div class="img-caption">
+                    {% autoescape on %}
+                    <p><span>{{image.profile.username}}:</span> {{image.image_caption|safe}}</p>
+                    {% endautoescape %}
+                   
+                </div>
+                <div class="comments">
+                    {% for cmnt in image.comments.all %}
+                    <div class="comment">
+                        <div class="date">{{ cmnt.created_date }}</div>
+                        <p> <strong>{{ cmnt.user }}</strong> {{ cmnt.comment}}</p>
+                    </div>
+                    {% empty %}
+                        <p>No comments here yet :(</p>
+                    {% endfor %}
+                </div>
+                <div class="add-comment">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="text" name="cmnt-field" value="{{image.id}}" hidden>
+                            
+                        </div>
+                        <button type="submit" hidden></button>
+                    </form>
+                    <!-- <input type="text" name="cmnt-img" id={{image.id}} placeholder="Add a comment..."> -->
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

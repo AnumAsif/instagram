@@ -5,6 +5,7 @@ from tinymce.models import HTMLField
 
 
 class Profile(models.Model):
+    
     user=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     profile_photo=ImageField(blank=True, manual_crop='800x800')
     bio=HTMLField()
@@ -83,6 +84,10 @@ class Comments(models.Model):
         comments = Comments.objects.filter(image__pk = id)
         return comments    
 
-class Follow(models.Model):
-    user_follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollower", null=True)
-    user_following= models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollowing", null=True)       
+class UserFollower(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollowedby")
+    user_follower= models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollower")  
+
+class UserFollowing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollowto")
+    user_following=models.ForeignKey(User, on_delete=models.CASCADE, related_name="userfollowing")  
