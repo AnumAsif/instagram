@@ -9,10 +9,10 @@
         <div class="card">
             <div class="post-author">
                 <div class="snap">
-                    <a href="{% url 'image' image_id=image.id %}"><img src="{{user.profile.profile_photo.cdn_url}}" alt=""></a>
+                    <a href="{% url 'image' image_id=image.id %}"><img src="{{image.profile.profile.profile_photo.cdn_url}}" alt=""></a>
                 </div>
                 <p class = "home-text">
-                    <a href="{% url 'profile' username=user.username %}">{{ image.profile.username }}</a>
+                    <a href="{% url 'profile' username=image.profile.username %}">{{ image.profile.username }}</a>
                 </p>
             </div>
             <div class="post-image">
@@ -61,16 +61,18 @@
         {% endfor %}
     </div>
     <div class="post-btn-div">
-        {% if user.profile.profile_photo.cdn_url %}
-        <img src="{{user.profile.profile_photo.cdn_url}}" alt="">
-        {% else %}
-        <img src="static/images/defaultimg.jpeg" alt="">
-        {% endif %}
-       
-        <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">+ Add a Post</a></button>
-        <p><span>{{ user.username }}</span></p>
-        <p>{{ user.full_name }}</p>
-    </div>
+        <div class="profile-info">
+            {% if user.profile.profile_photo.cdn_url %}
+            <img src="{{user.profile.profile_photo.cdn_url}}" alt="">
+            {% else %}
+            <img src="/static/images/defaultimg.jpeg" alt="">
+            {% endif %}
+            <div class='profile-info'>
+                <p><span>{{ user.username }}</span></p>
+                <button class="btn btn-primary" type="button" value=""><a href="{% url 'add_post' %}">+ Add a Post</a></button>
+            </div>
+        </div>
+     </div>
 
 </div>
 {% endblock content %}

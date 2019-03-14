@@ -11,9 +11,12 @@
                 <input class="form-control search-input" name="search" type="search" placeholder="&#x1F50D; Search" aria-label="Search">
             </form>
         </div>
-        <div class="bottom item">
-            <a href="{% url 'profile' username=user%}"><i class="far fa-user fa-2x"></i></a>
+        {% if user.is_authenticated %}
+         <div class="bottom item">
+            <a href="{% url 'profile' username=current_user%}"><i class="far fa-user fa-2x"></i></a>
         </div>
+        {% endif %}
+       
     </div>   
    
 </nav>

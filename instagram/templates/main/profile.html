@@ -1,20 +1,30 @@
 {% extends 'main/base.html' %}
+{% load bootstrap3 %}
 
 {% block content %}
     <div class="container">
         <div class="item1">
             <div class="img-div">
+                {% if user.profile.profile_photo.cdn_url %}
                 <img src="{{user.profile.profile_photo.cdn_url}}" alt="Image">
+                {% else %}
+                <img src="/static/images/defaultimg.jpeg" alt="">
+                {% endif %}
             </div>
         </div>
         <div class="item1">
             <div class="profile-name">
                 <p style="color:black;">{{user.username}}</p>
-                {% comment %} {% if user.is_authenticated and user.username == profile.username %}{% endif %} {% endcomment %}
-                <button class="btn btn-info btn-md">Follow</button>
+                {% if user.is_authenticated and user == current_user %}
                 <button class="btn btn-edit"><a href="{% url 'edit_profile' %}">Edit Profile</a></button>
+                <button class="btn btn-logout"><a href="{% url 'logout' %}">Logout</a></button>
+                {% else %}
+                <button class="btn btn-info btn-md"><a href="{% url 'follow' user=user%}">Follow</a></button>
+                <button class="btn btn-edit"><a href="{% url 'edit_profile' %}">Edit Profile</a></button>
+                <button class="btn btn-logout"><a href="{% url 'logout' %}">Logout</a></button>
+                {% endif %}
+                 
             </div>
-            
             <div class="profile-info">
                 <p><span>{{posts.count}}</span>  posts</p>
                 <p><span>{{followers.count}}</span>  followers</p>
@@ -26,6 +36,27 @@
                 {% endautoescape %}
             </div>
         </div>
+       
     </div>
+    <div class="profilebox">
+        <!-- <div class="row"> -->
+           
+           
+            {% for post in posts %}
+            <div class="profilecard" >
+                <a href="{% url 'image' image_id=post.id %}"><img src="{{post.image.cdn_url}}" alt=""></a>
+                <!-- <div class="card-body">
+                  <h5 class="card-title">Card title</h5> -->
+                  <!-- {% autoescape on %}
+                  <p class="card-text">{{post.image_caption|safe}}</p>
+                  {% endautoescape %}  
+                </div> -->
+            </div>
+            {% endfor %}
+          
+            
+        <!-- </div> -->
+    </div>
+
 
 {% endblock  %}

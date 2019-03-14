@@ -70,15 +70,16 @@ def home(request):
         return redirect('home')
     else:
         form=CommentForm()
-    return render(request, 'main/home.html',{'images':images, 'user':user, 'form':form})
+    return render(request, 'main/home.html',{'images':images, 'current_user':user, 'form':form})
 
+@login_required(login_url='/')
 def profile(request,username):
     user=User.objects.get(username=username)
     followers=UserFollower.objects.filter(user=user)
     followings=UserFollowing.objects.filter(user=user)
     posts=Image.objects.filter(profile__pk=user.id)
-    
-    return render(request, 'main/profile.html',{'user':user,'posts':posts, "followings":followings,"followers":followers})    
+    current_user = request.user
+    return render(request, 'main/profile.html',{'current_user':current_user,'user':user,'posts':posts, "followings":followings,"followers":followers})    
 
 @login_required(login_url='/accounts/login')
 def addpost(request):
@@ -92,8 +93,10 @@ def addpost(request):
         return redirect('home')
     else:
         form=ImageForm()
-    return render(request, 'main/new_post.html',{"form":form})        
+    return render(request, 'main/new_post.html',{"form":form, "current_user":user})        
 
+
+@login_required(login_url='/accounts/login')
 def like(request,post_id):
 
     user=request.user
@@ -107,6 +110,7 @@ def like(request,post_id):
         imagelikes.delete()    
     return redirect('home')
 
+@login_required(login_url='/accounts/login')
 def comment(request, post_id):
     
     user=request.user
@@ -114,20 +118,24 @@ def comment(request, post_id):
 
     return redirect('home')
 
+
+@login_required(login_url='/accounts/login')
 def search(request):
+    current_user=request.user
     if 'search' in request.GET and request.GET['search']:
         search_term = request.GET.get('search')
         profiles = Profile.search_profile(search_term)
         message=f'{search_term}'
 
-        return render(request, 'main/search.html', {'message':message, 'profiles':profiles})
+        return render(request, 'main/search.html', {'message':message, 'profiles':profiles, 'current_user':current_user})
 
     else:
         message='Enter term to search'
-        return render(request, 'main/search.html',{'message':message})     
+        return render(request, 'main/search.html',{'message':message, 'current_user':current_user})     
 
 @login_required(login_url='/accounts/login')
 def edit_profile(request):
+    user=request.user
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -138,13 +146,13 @@ def edit_profile(request):
     else:
         form = ProfileForm()
 
-    return render(request, 'main/edit_profile.html', {'form':form})
+    return render(request, 'main/edit_profile.html', {'form':form, 'current_user':user})
 
 @login_required(login_url='/accounts/login')
 def image(request, image_id):
     image = Image.get_image_id(image_id)
     comments = Comments.get_comments_by_images(image_id)
-
+    user=request.user
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -156,5 +164,13 @@ def image(request, image_id):
     else:
         form = CommentForm()
         
-    return render(request, 'main/image.html', {'image':image, 'form':form, 'comments':comments})
+    return render(request, 'main/image.html', {'image':image, 'form':form, 'comments':comments,'current_user':user})
 
+@login_required(login_url='/accounts/login')
+def follow(request, current_user, user):
+    current_user=request.user
+    userfollowing=UserFollowing.objects.create(user=current_user,user_following=user)
+    userfollowing.save()
+    userfollower=UserFollower.objects.create(user=user, user_follower=current_user)
+    userfollower.save()
+    redirect('profile', username=user.username)

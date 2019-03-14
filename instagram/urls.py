@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^search/', views.search, name="search"),
     url(r'^accounts/edit/',views.edit_profile, name='edit_profile'),  
     url(r'^image/(?P<image_id>\d+)', views.image, name='image'),
+    url(r'^profile/(?P<user>\w+)/$', views.follow, name='follow')    
 ]
 if settings.DEBUG:
    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
